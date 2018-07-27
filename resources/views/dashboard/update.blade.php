@@ -14,6 +14,16 @@
                         </div>
                     @endif
 
+                    @if($errors->any())
+                        <div class="alert alert-danger pb-0">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+
                     <form method="POST" action="{{ route('redirects.update') }}">
                         {{ csrf_field() }}
                         <input type="hidden" name="id" value="{{ $redirect->id }}">

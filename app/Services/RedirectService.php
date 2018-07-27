@@ -53,10 +53,14 @@ class RedirectService
 	 * @param array $data Contains path and target data
 	 * @return Response
 	 */
-	public function add(array $data)
+	public function add(array $data, $returnResult = false)
 	{
 		$result = $this->shopifyApiService->call(['endpoint' => self::$endpoints['redirects']], $data, 'POST');
 
+		if($returnResult) {
+			return $result;
+		}
+		
 		return is_object($result) ? 'Successfully added redirect' : 'An error has occured!';
 	}
 

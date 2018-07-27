@@ -29,7 +29,7 @@
                                 @foreach($redirects as $key => $redirect)
                                 <tr>
                                     <th scope="row">{{ $key }}</th>
-                                    <td>{{ $redirect->path }}</td>
+                                    <td><a href="//{{ config('shopify.SHOPIFY_SHOP_DOMAIN') . $redirect->path }}" target="_BLANK">{{ $redirect->path }}</a></td>
                                     <td>{{ $redirect->target }}</td>
                                     <td>
                                         <a href="{{ route('redirects.edit', $redirect->id) }}"><button type="button" class="btn btn-primary btn-sm">Update</button></a>

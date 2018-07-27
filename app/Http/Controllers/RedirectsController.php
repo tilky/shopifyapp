@@ -46,7 +46,7 @@ class RedirectsController extends Controller
 		]);
 	}
 
-	public function edit($id)
+	public function edit(int $id)
 	{
 		return view('dashboard.update')->with([
 			'redirect' => $this->redirectService->getById($id),
@@ -71,9 +71,10 @@ class RedirectsController extends Controller
 	{
 		$redirectType = $request->redirect_type;
 
+		// validation
 		$request->validate([
 		    'path' => 'required',
-		    $redirectType => 'required',
+		    $redirectType => 'required'
 		]);
 
 		$data = [
@@ -95,6 +96,13 @@ class RedirectsController extends Controller
 	 */
 	public function update(Request $request)
 	{
+		// validation
+		$request->validate([
+		    'id' => 'required|integer',
+		    'path' => 'required',
+		    'target' => 'required'
+		]);
+
 		$data = [
 			'redirect' => [
 				'id' => $request->id,
@@ -113,7 +121,7 @@ class RedirectsController extends Controller
 	 * @param  int $id ID of the redirect
 	 * @return redirect back
 	 */
-	public function destroy($id)
+	public function destroy(int $id)
 	{
 		$result = $this->redirectService->delete($id);
 
@@ -127,7 +135,10 @@ class RedirectsController extends Controller
 	 */
 	public function processImport(Request $request)
 	{
-		// @todo handle proper validation
+		// validation
+		$request->validate([
+		    'redirects_csv' => 'required|file'
+		]);
 		
 		$errors = new \Illuminate\Support\MessageBag;
 		$linesImported = 0;
@@ -144,7 +155,7 @@ class RedirectsController extends Controller
 				]
 			];
 
-			$result = $this->redirectService->add($data);
+			$result = $this->redirectService->add($data, true);
 
 			if(is_object($result)) {
 				$linesImported++;
