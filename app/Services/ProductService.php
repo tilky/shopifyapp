@@ -15,6 +15,9 @@ class ProductService
 		$this->shopifyApiService = $shopifyApiService;
 	}
 
+	/*
+	 * Get all products
+	 */
 	public function getAll()
 	{
 		$products = $this->shopifyApiService->call(['endpoint' => self::$endpoints['products']])->products;

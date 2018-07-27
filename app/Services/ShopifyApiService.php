@@ -14,21 +14,19 @@ class ShopifyApiService
 	public function __construct()
 	{
 		$this->shopify = App::make('ShopifyAPI', [
-			'API_KEY' => env('SHOPIFY_API_KEY'),
-			'API_SECRET' => env('SHOPIFY_API_SECRET'),
-			'SHOP_DOMAIN' => env('SHOPIFY_SHOP_DOMAIN'),
-			'ACCESS_TOKEN' => env('SHOPIFY_ACCESS_TOKEN')
+			'API_KEY' => config('shopify.SHOPIFY_API_KEY'),
+			'API_SECRET' => config('shopify.SHOPIFY_API_SECRET'),
+			'SHOP_DOMAIN' => config('shopify.SHOPIFY_SHOP_DOMAIN'),
+			'ACCESS_TOKEN' => config('shopify.SHOPIFY_ACCESS_TOKEN')
 		]);
 	}
 
-	private function _endpoint($params)
+	/*
+	 * Derive the endpoint
+	 */
+	private function _endpoint(array $params)
 	{
 		return $params['endpoint'] . (isset($params['params']) ? '/' . $params['params'] : '') . '.json';
-	}
-
-	public function isError()
-	{
-		
 	}
 
 	/**

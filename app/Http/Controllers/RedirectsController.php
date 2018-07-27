@@ -54,13 +54,18 @@ class RedirectsController extends Controller
 		]);
 	}
 
+	/*
+	 * Import redirects view
+	 */
 	public function import()
 	{
 		return view('dashboard.import');
 	}
 
-	/*
+	/**
 	 * Store a redirect
+	 * @param  Request $request
+	 * @return redirect back
 	 */
 	public function store(Request $request)
 	{
@@ -80,11 +85,14 @@ class RedirectsController extends Controller
 
 		$result = $this->redirectService->add($data);
 
-		$message = is_object($result) ? 'Successfully added redirect' : 'An error has occured!';
-
-		return back()->with('status', $message);
+		return back()->with('status', $result);
 	}
 
+	/**
+	 * Update a redirect
+	 * @param  Request $request
+	 * @return redirect back
+	 */
 	public function update(Request $request)
 	{
 		$data = [
@@ -95,21 +103,28 @@ class RedirectsController extends Controller
 			]
 		];
 
-		$this->redirectService->update($data, $request->id);
+		$result = $this->redirectService->update($data, $request->id);
 
-		return back()->with('status', 'Successfully updated redirect');
+		return back()->with('status', $result);
 	}
 
-	/*
+	/**
 	 * Delete a redirect
+	 * @param  int $id ID of the redirect
+	 * @return redirect back
 	 */
 	public function destroy($id)
 	{
-		$this->redirectService->delete($id);
+		$result = $this->redirectService->delete($id);
 
-		return back()->with('status', 'Successfully deleted redirect');
+		return back()->with('status', $result);
 	}
 
+	/**
+	 * Process the import using csv file
+	 * @param  Request $request Contains the CSV file
+	 * @return redirect back
+	 */
 	public function processImport(Request $request)
 	{
 		// @todo handle proper validation
